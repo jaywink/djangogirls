@@ -1,10 +1,6 @@
 
 # Django Testing
 
-From the terminal, pop in:
+Jason Robinson & Charlie Hornsby
 
-  ```yo reveal:slide "Slide Title"```
-
-Available options:
-
- ```--markdown --attributes --notes```
+Anders Innovations Oy

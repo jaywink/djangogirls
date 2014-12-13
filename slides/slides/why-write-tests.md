@@ -1,3 +1,5 @@
 ##  Why write tests?
 
-This is a new Markdown slide
+<br>
+
+> "Isn't this the job of the QA engineer?"
