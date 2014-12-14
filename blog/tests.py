@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from django.test import TestCase
+from django.test import TestCase, LiveServerTestCase
+
+from selenium.webdriver.firefox.webdriver import WebDriver
 
 from blog.models import Post
 
@@ -73,8 +75,16 @@ class SuperUserTestCase(TestCase):
         self.assertContains(response, "Publish")
 
     def test_superuser_can_edit_old_blog_post(self):
-        # TODO: Write a test to check if the admin can edit a previous post.
-        pass
+        new_title = 'Test Title 3'
+        new_text = 'Blah blah blah...'
+
+        response = self.client.post(reverse('post_edit', kwargs={'pk': self.post.pk}), {
+            'title': new_title,
+            'text': new_text
+        }, follow=True)
+
+        self.assertRedirects(response, reverse('post_detail', kwargs={'pk': self.post.pk}))
+        self.assertContains(response, new_title)
 
     def _create_post(self, author, title='Test Title 1', text='Lorem ipsum'):
         return Post.objects.create(
@@ -165,3 +175,21 @@ class BlogModelsTestCase(TestCase):
     def test_post_title(self):
         post = Post.objects.first()
         self.assertEquals(str(post), post.title)
+
+
+class SeleniumTestCase(LiveServerTestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.selenium = WebDriver()
+        super(SeleniumTestCase, cls).setUpClass()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.selenium.quit()
+        super(SeleniumTestCase, cls).tearDownClass()
+
+    def build_absolute_url(self, relative_url):
+        if not relative_url.startswith('/'):
+            relative_url = reverse(relative_url)
+        return '%s%s' % (self.live_server_url, relative_url)
