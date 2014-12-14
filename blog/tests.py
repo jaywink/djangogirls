@@ -53,6 +53,25 @@ class SuperUserTestCase(TestCase):
         self.assertRedirects(response, reverse('post_detail', kwargs={'pk': post.pk}))
         self.assertContains(response, title)
 
+    def test_superuser_can_publish_blog_post(self):
+        # Note: if this was a live server test case, we could browse to the
+        # post and click the button. While that is fine, the publish view
+        # can be separately and individually tested by directly posting to it.
+        response = self.client.post(reverse("post_publish", kwargs={"pk": self.post.pk}))
+        # We could check for status code, but `assertRedirects` is better
+        self.assertRedirects(response, reverse("post_detail", kwargs={"pk": self.post.pk}))
+        # Note: We check here if the publish was successful, even though that is already
+        # handled by the model test.
+        # When testing, more can be better.
+        post = Post.objects.get(id=self.post.pk)
+        self.assertIsNotNone(post.published_date)
+
+    def test_superuser_has_publish_button_in_unpublished_blog_post(self):
+        response = self.client.get(reverse("post_detail", kwargs={"pk": self.post.pk}))
+        # We can safely check for just the word 'Publish', since we know the
+        # test post will not include it
+        self.assertContains(response, "Publish")
+
     def test_superuser_can_edit_old_blog_post(self):
         # TODO: Write a test to check if the admin can edit a previous post.
         pass
