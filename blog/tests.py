@@ -52,3 +52,86 @@ class SuperUserTestCase(TestCase):
             title=title,
             text=text,
         )
+
+
+class BasicViewsTestCase(TestCase):
+
+    def _create_post(self, author, title='Test Title 1', text='Lorem ipsum'):
+        return Post.objects.create(
+            author=author,
+            title=title,
+            text=text,
+        )
+
+    def setUp(self):
+        """Add some objects to the database that all tests will need.
+
+        Yes these should be unified with the above - but shall we do that
+        here or as a in-session code refactoring excercise?"""
+
+        self.user = User.objects.create(
+            username='author', email='', password='author'
+        )
+        self.post = self._create_post(
+            author=User.objects.get(username='author'),
+            title='Test Title 1',
+            text='Here is lots of post content... blah blah blah...'
+        )
+
+    def test_blog_post_list_renders(self):
+        response = self.client.get(reverse("post_list"))
+
+    def test_blog_post_detail_renders(self):
+        response = self.client.get(reverse("post_detail", kwargs={"pk": 1}))
+
+    def test_blog_post_list_shows_only_published_posts(self):
+        post = self._create_post(
+            author=User.objects.get(username='author'),
+            title='Test Title 2',
+            text='Here is lots of post content... blah blah blah...'
+        )
+        post.publish()
+        response = self.client.get(reverse("post_list"))
+        # just match content
+        # for more advanced HTML verifying - LiveServerTestCase!
+        self.assertContains(response, "Test Title 2")
+        self.assertNotContains(response, "Test Title 1")
+
+
+class BlogModelsTestCase(TestCase):
+
+    def _create_post(self, author, title='Test Title 1', text='Lorem ipsum'):
+        return Post.objects.create(
+            author=author,
+            title=title,
+            text=text,
+        )
+
+    def setUp(self):
+        """Add some objects to the database that all tests will need.
+
+        Yes these should be unified with the above - but shall we do that
+        here or as a in-session code refactoring excercise?"""
+
+        self.user = User.objects.create(
+            username='author', email='', password='author'
+        )
+        self.post = self._create_post(
+            author=User.objects.get(username='author'),
+            title='Test Title 1',
+            text='Here is lots of post content... blah blah blah...'
+        )
+
+    def test_new_post_is_not_published_by_default(self):
+        post = Post.objects.first()
+        self.assertIsNone(post.published_date)
+
+    def test_post_can_be_published(self):
+        post = Post.objects.first()
+        post.publish()
+        post = Post.objects.first() # we fetch it again, why? to see if .publish() saves as it should!
+        self.assertIsNotNone(post.published_date)
+
+    def test_post_title(self):
+        post = Post.objects.first()
+        self.assertEquals(str(post), post.title)
