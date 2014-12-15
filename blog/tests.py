@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
+import time
+
 from django.contrib.auth.models import User
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.core.urlresolvers import reverse
-from django.test import TestCase, LiveServerTestCase
+from django.test import TestCase
 
 from selenium.webdriver.firefox.webdriver import WebDriver
 
@@ -177,7 +180,7 @@ class BlogModelsTestCase(TestCase):
         self.assertEquals(str(post), post.title)
 
 
-class SeleniumTestCase(LiveServerTestCase):
+class SeleniumTestCase(StaticLiveServerTestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -189,7 +192,50 @@ class SeleniumTestCase(LiveServerTestCase):
         cls.selenium.quit()
         super(SeleniumTestCase, cls).tearDownClass()
 
+    def setUp(self):
+        super().setUp()
+        User.objects.create_superuser(username="admin", password="admin", email='')
+
     def build_absolute_url(self, relative_url):
         if not relative_url.startswith('/'):
             relative_url = reverse(relative_url)
         return '%s%s' % (self.live_server_url, relative_url)
+
+    def test_browse_to_page(self):
+        # Browse to the login page
+        self.selenium.get(self.build_absolute_url('/admin/login/?next=/'))
+        time.sleep(3)
+
+        # Fill out input
+        username_input = self.selenium.find_element_by_name("username")
+        username_input.send_keys('admin')
+        time.sleep(3)
+        password_input = self.selenium.find_element_by_name("password")
+        password_input.send_keys('admin')
+        time.sleep(3)
+
+        # Log in
+        self.selenium.find_element_by_xpath('//input[@value="Log in"]').click()
+        time.sleep(3)
+
+        # Browse to new post
+        self.selenium.get(self.build_absolute_url('post_new'))
+        time.sleep(3)
+
+        # Fill out input
+        title_input = self.selenium.find_element_by_name("title")
+        title_input.send_keys('The best title ever')
+        time.sleep(3)
+        text_input = self.selenium.find_element_by_name("text")
+        text_input.send_keys('admin')
+
+        for word in 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut scelerisque sapien eros, quis pellentesque dolor imperdiet eu. Fusce ligula justo, viverra in eros non, convallis porta velit. Maecenas varius bibendum commodo. Suspendisse suscipit congue vestibulum. Aliquam sit amet commodo nisi. Suspendisse lectus nisl, lobortis id lacus eu, mollis convallis libero. Mauris et neque sit amet tortor eleifend pellentesque. Praesent quis mauris eget risus posuere suscipit. Nullam purus sapien, aliquet id erat et, blandit suscipit dolor. Nunc mattis lacinia metus ac rutrum. Curabitur ut ligula sit amet purus feugiat ornare sed ac neque. Maecenas porttitor erat orci, ut sodales nunc egestas vitae. Praesent feugiat rhoncus neque, non faucibus mauris. Pellentesque placerat auctor imperdiet. Duis pulvinar, metus nec placerat gravida, nibh leo tristique tortor, ut porta lacus eros et libero. '.split():
+            text_input.send_keys(word + " ")
+        time.sleep(3)
+
+        # Submit post
+        self.selenium.find_element_by_xpath('//button[@value="Save"]').click()
+        time.sleep(3)
+
+
+
