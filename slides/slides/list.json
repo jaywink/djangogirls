@@ -1,5 +1,6 @@
 [
     "index.md",
+    "anders.md",
     [
         "why-write-tests.md",
         "tests-not-for-qa-only.md",
