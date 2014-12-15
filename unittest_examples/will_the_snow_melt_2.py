@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 def parse_integer(string_in):
     """Return an integer from a string or else None."""
-    if isinstance(string_in, str):
-        string_in = string_in.strip()
     try:
         return int(string_in)
     except ValueError:
