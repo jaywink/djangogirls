@@ -7,5 +7,20 @@
         "integration-tests.md",
         "acceptance-tests.md",
         "django-testing.md"
+    ],
+    [
+    	"django-testing-framework.md",
+    	"django-testing-tutorial.md",
+    	"django-tests-location.md",
+    	"django-running-tests.md",
+    	"django-test-client.md",
+    	"django-test-classes.md",
+    	"django-test-classes-2.md",
+    	"django-test-classes-3.md"
+    ],
+    [
+        "test-tips.md",
+        "test-tips-2.md",
+        "test-tips-3.md"
     ]
 ]
