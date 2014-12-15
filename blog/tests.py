@@ -234,8 +234,10 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         time.sleep(3)
 
         # Submit post
-        self.selenium.find_element_by_xpath('//button[@value="Save"]').click()
+        self.selenium.find_element_by_css_selector('button[type="submit"]').click()
         time.sleep(3)
+        title = self.selenium.find_element_by_css_selector('.post > h1').text
+        self.assertTrue(title, 'The best title ever')
 
 
 
