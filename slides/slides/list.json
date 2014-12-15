@@ -10,6 +10,13 @@
         "django-testing.md"
     ],
     [
+        "unittest-example-code-1.md",
+        "unittest-example-code-2.md",
+        "unittest-test-output.md",
+        "unittest-test-code.md",
+        "unittest-test-results.md"
+    ],
+    [
     	"django-testing-framework.md",
     	"django-testing-tutorial.md",
     	"django-tests-location.md",
