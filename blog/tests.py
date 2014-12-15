@@ -24,6 +24,17 @@ class SuperUserTestCase(TestCase):
         response = self.client.get(reverse('post_list'))
         self.assertContains(response, 'Django Girls Blog')
 
+    def test_superuser_post_list_shows_also_unpublished_posts(self):
+        post = self._create_post(
+            author=User.objects.get(username='admin'),
+            title='Test Title 2',
+            text='Here is lots of post content... blah blah blah...'
+        )
+        post.publish()
+        response = self.client.get(reverse("post_list"))
+        self.assertContains(response, "Test Title 2")
+        self.assertContains(response, "Test Title 1")
+
     def test_superuser_can_view_blog_post(self):
         response = self.client.get(reverse('post_detail', kwargs={'pk': self.post.pk}))
         self.assertContains(response, self.post.title)
