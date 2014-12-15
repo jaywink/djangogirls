@@ -19,11 +19,6 @@
     	"django-test-classes-2.md",
     	"django-test-classes-3.md"
     ],
-    [
-        "test-tips.md",
-        "test-tips-2.md",
-        "test-tips-3.md"
-	],
 	[
         "tdd-example.md",
         "tdd-example-2.md",
@@ -33,5 +28,10 @@
         "tdd-example-6.md",
         "tdd-wrapup.md",
         "tdd-wrapup-2.md"
+    ],
+    [
+        "test-tips.md",
+        "test-tips-2.md",
+        "test-tips-3.md"
     ]
 ]
