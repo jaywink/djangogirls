@@ -19,6 +19,11 @@
     	"django-test-classes-2.md",
     	"django-test-classes-3.md"
     ],
+    [
+        "testcase-django-1.md",
+        "testcase-django-2.md",
+        "testcase-django-3.md"
+    ],
 	[
         "tdd-example.md",
         "tdd-example-2.md",
