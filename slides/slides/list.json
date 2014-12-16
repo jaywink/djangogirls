@@ -48,5 +48,9 @@
         "test-tips-3.md",
         "test-tips-4.md"
     ],
-    "the-end.md"
+    [
+        "the-end.md",
+        "the-end-hacking.md",
+        "the-end-hacking-2.md"
+    ]
 ]
