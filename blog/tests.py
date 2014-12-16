@@ -204,38 +204,38 @@ class SeleniumTestCase(StaticLiveServerTestCase):
     def test_browse_to_page(self):
         # Browse to the login page
         self.selenium.get(self.build_absolute_url('/admin/login/?next=/'))
-        time.sleep(3)
+        time.sleep(2)
 
         # Fill out input
         username_input = self.selenium.find_element_by_name("username")
         username_input.send_keys('admin')
-        time.sleep(3)
+        time.sleep(2)
         password_input = self.selenium.find_element_by_name("password")
         password_input.send_keys('admin')
-        time.sleep(3)
+        time.sleep(2)
 
         # Log in
         self.selenium.find_element_by_xpath('//input[@value="Log in"]').click()
-        time.sleep(3)
+        time.sleep(2)
 
         # Browse to new post
         self.selenium.get(self.build_absolute_url('post_new'))
-        time.sleep(3)
+        time.sleep(2)
 
         # Fill out input
         title_input = self.selenium.find_element_by_name("title")
         title_input.send_keys('The best title ever')
-        time.sleep(3)
+        time.sleep(2)
         text_input = self.selenium.find_element_by_name("text")
         text_input.send_keys('admin')
 
         for word in 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut scelerisque sapien eros, quis pellentesque dolor imperdiet eu. Fusce ligula justo, viverra in eros non, convallis porta velit. Maecenas varius bibendum commodo. Suspendisse suscipit congue vestibulum. Aliquam sit amet commodo nisi. Suspendisse lectus nisl, lobortis id lacus eu, mollis convallis libero. Mauris et neque sit amet tortor eleifend pellentesque. Praesent quis mauris eget risus posuere suscipit. Nullam purus sapien, aliquet id erat et, blandit suscipit dolor. Nunc mattis lacinia metus ac rutrum. Curabitur ut ligula sit amet purus feugiat ornare sed ac neque. Maecenas porttitor erat orci, ut sodales nunc egestas vitae. Praesent feugiat rhoncus neque, non faucibus mauris. Pellentesque placerat auctor imperdiet. Duis pulvinar, metus nec placerat gravida, nibh leo tristique tortor, ut porta lacus eros et libero. '.split():
             text_input.send_keys(word + " ")
-        time.sleep(3)
+        time.sleep(2)
 
         # Submit post
         self.selenium.find_element_by_css_selector('button[type="submit"]').click()
-        time.sleep(3)
+        time.sleep(2)
         title = self.selenium.find_element_by_css_selector('.post > h1').text
         self.assertTrue(title, 'The best title ever')
 
