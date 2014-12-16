@@ -1,5 +1,8 @@
 ## Testing with a Real Browser is also possible
-
+    
+    from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+    
+    
     class SeleniumTestCase(StaticLiveServerTestCase):
         def test_browse_to_page(self):
             # Browse to the login page
