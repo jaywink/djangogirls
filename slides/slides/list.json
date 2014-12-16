@@ -22,7 +22,8 @@
     [
         "testcase-django-1.md",
         "testcase-django-2.md",
-        "testcase-django-3.md"
+        "testcase-django-3.md",
+        "liveserver-django-testcase.md"
     ],
 	[
         "tdd-example.md",
