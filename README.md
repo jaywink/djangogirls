@@ -1,26 +1,15 @@
-### Install for development
+# PyLadies Helsinki - Tests in Django
 
-From: https://github.com/slara/generator-reveal
+## Slides
 
-Node.js needed.
+For this meetup we gave a presentation on Django Testing, covering basics of unit testing, TDD and then the Django test framework.
 
-```
-sudo npm install -g grunt-cli
-sudo npm install -g generator-reveal
-sudo npm install -g bower
-```
+[Meetup presentation here.](http://jaywink.github.io/djangogirls/slides/index.html)
 
-### Running server
+## Code
 
-```
-cd slides
-npm install
-bower install
-grunt server
-```
+For the meetup we took the DjangoGirls blog app tutorial and added some tests to it. Code referenced in the slides can be found in the repo.
 
-_Maybe not all these needed, but works after these at least... :)_
+## Meetup page
 
-### Adding slides
-
-In `slides/`, see https://github.com/slara/generator-reveal commands.
+http://www.meetup.com/Helsinki-PyLadies/events/218930447/
